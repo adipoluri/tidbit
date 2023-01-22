@@ -17,6 +17,7 @@ import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 
 import {BiMeh} from 'react-icons/bi';
 import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
+import styles from 'react-awesome-button/src/styles/themes/theme-c137';
 
 // This is the firebase.ts file we created a few
 // steps ago when we received our config!
@@ -96,13 +97,16 @@ function IndexPopup() {
       {!user ? (
         <Container>
           <Box>
-            <button
-              onClick={() => {
+
+            <AwesomeButton 
+              cssModule={styles}
+              onPress={() => {
                 setIsLoading(true)
                 onLoginClicked()
-              }}>
+              }}
+              size="medium">
               Log in
-            </button>
+            </AwesomeButton>
           </Box>
         </Container>
         ) : (
@@ -129,8 +133,7 @@ function IndexPopup() {
           <div>
             {!!user ? (
               <div>
-                Welcome to Plasmo, {user.displayName} your email address is{" "}
-                {user.email}
+                Hey {user.displayName}! Welcome to 🍩 TidBit!
               </div>
             ) : (
               ""
