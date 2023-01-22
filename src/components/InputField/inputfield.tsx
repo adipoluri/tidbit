@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import {Configuration, OpenAIApi} from "openai";
 import { TextField, Paper } from "@mui/material";
 import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
-import 'react-awesome-button/dist/styles.css';
+import styles from 'react-awesome-button/src/styles/themes/theme-c137';
 
 function InputField() {  
   const [prompt, setPrompt] = useState("");
@@ -48,18 +48,18 @@ function InputField() {
                 //chrome.storage.local.set({prompt: e.target.value});
             }}
         />
-        <AwesomeButtonProgress
+        <AwesomeButtonProgress 
             type="primary"
             size="medium"
             onPress= {(event,release) => {handleSubmit(release)}}
+            cssModule={styles}
         >
             Submit
         </AwesomeButtonProgress>
         <Paper
             elevation={3}
-            
             sx={{p:3}}
-            style={{marginTop:"1em",marginBottom:"1em", minHeight:"80px"}}
+            style={{marginTop:"1em",marginBottom:"1em", minHeight:"80px",maxWidth:300}}
         >
             {response}
         </Paper>

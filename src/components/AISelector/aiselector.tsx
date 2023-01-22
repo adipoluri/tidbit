@@ -3,34 +3,34 @@ import { Tabs } from "@mui/material";
 import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
 import {BiMeh} from 'react-icons/bi';
 import { AwesomeButton } from 'react-awesome-button';
-import 'react-awesome-button/dist/styles.css';
+import styles from 'react-awesome-button/src/styles/themes/theme-c137';
 
 
 function AISelector() {
   return (
     <>
         <Tabs orientation="vertical">
-          <AwesomeButton>
+          <AwesomeButton cssModule={styles}>
             <AiFillQuestionCircle/>
           </AwesomeButton>
 
-          <AwesomeButton>
+          <AwesomeButton cssModule={styles}>
             <AiFillPicture/>
           </AwesomeButton>
 
-          <AwesomeButton>
+          <AwesomeButton cssModule={styles}>
             <AiOutlineCheck/>
           </AwesomeButton>
 
-          <AwesomeButton>
+          <AwesomeButton cssModule={styles}>
             <AiFillWechat/>
           </AwesomeButton>
 
-          <AwesomeButton>
+          <AwesomeButton cssModule={styles}>
             <BiMeh/>
           </AwesomeButton>
           
-          <AwesomeButton>
+          <AwesomeButton cssModule={styles}>
             <BiMeh/>
           </AwesomeButton>
         </Tabs>     
