@@ -10,9 +10,9 @@ import {
 
 import AutorenewIcon from '@mui/icons-material/Autorenew';
 import {Configuration, OpenAIApi} from "openai";
-
-import { Box, Button, Container, Grid, TextField, Paper, Tabs, Tab } from "@mui/material";
-import { ChromeReaderMode, Padding } from "@mui/icons-material";
+import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
+import { Box, Stack, Container, Divider, ThemeProvider, Tabs, Tab } from "@mui/material";
+import { AccountTree, ChromeReaderMode, Padding } from "@mui/icons-material";
 import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
 import {BiMeh} from 'react-icons/bi';
 import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
@@ -24,6 +24,9 @@ import styles from 'react-awesome-button/src/styles/themes/theme-c137';
 import { auth } from "./firebase"
 import AISelector from "./components/AISelector/aiselector";
 import InputField from "./components/InputField/inputfield"
+import LoadingScreen from "./components/misc/loader";
+import LogoButton from "./components/misc/logobutton";
+import {theme} from "./config"
 
 // We'll need to specify that we want Firebase to store
 // our credentials in localStorage rather than in-memory
@@ -79,16 +82,9 @@ function IndexPopup() {
     })
   }, [])
 
-  console.log(isLoading)
   if(isLoading) {
     return (
-      <>
-        <Container>
-          <Box>
-            Loading...
-          </Box>
-        </Container>
-      </>
+      <LoadingScreen/>
     )
   }
   
@@ -97,49 +93,43 @@ function IndexPopup() {
       {!user ? (
         <Container>
           <Box>
-
-            <AwesomeButton 
-              cssModule={styles}
+            <AwesomeButton cssModule={styles} size="medium"
               onPress={() => {
                 setIsLoading(true)
                 onLoginClicked()
-              }}
-              size="medium">
+              }}>
               Log in
             </AwesomeButton>
           </Box>
         </Container>
         ) : (
-        <Container>
-          <Grid 
-            container
-            wrap="nowrap"
-            spacing={3}
-            >
-            <Grid item>
-              <AISelector/>
-            </Grid>
-            <Grid item>
-              <InputField/>
-            </Grid>
-          </Grid>
-          <button
-            onClick={() => {
-            setIsLoading(true)
-            onLogoutClicked()
-          }}>
-            Log out
-          </button>
-          <div>
-            {!!user ? (
-              <div>
-                Hey {user.displayName}! Welcome to 🍩 TidBit!
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </Container>
+        <ThemeProvider theme={theme}>
+          <Container style={{backgroundColor:"#36393e"}}>
+            <Grid2 container wrap="nowrap" spacing={6}>
+              <Grid2 style={{backgroundColor:"#282b30",}}>
+                <Stack spacing={1}>
+                  <LogoButton/>
+                  <AISelector/>
+                  <Divider style={{backgroundColor:"#3c54aa"}}/>
+                  <AwesomeButton cssModule={styles} type="danger">
+                    <AiFillWechat size={"1.5em"}/>
+                  </AwesomeButton>
+                  <AwesomeButton 
+                  cssModule={styles} 
+                    onPress={() => {
+                        setIsLoading(true)
+                        onLogoutClicked()
+                      }}>
+                    <img src={user.photoURL} style={{width:"30px",height:"30px",borderRadius:"25px"}}/>
+                  </AwesomeButton>
+                </Stack>
+              </Grid2>
+              <Grid2 style={{backgroundColor:"#36393e"}}>
+                <InputField/>
+              </Grid2>
+            </Grid2>
+          </Container>
+        </ThemeProvider>
       )}
     </>
   )
@@ -147,6 +137,25 @@ function IndexPopup() {
 
 export default IndexPopup
 
+
+
+
+
 /*
-    
+          <div>
+            {!!user ? (
+              <div>
+                Hey {user.displayName}! Welcome to 🍩 TidBit! 
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+
+    <button onClick={() => {
+            setIsLoading(true)
+            onLogoutClicked()
+          }}>
+            Log out
+          </button>
 */
