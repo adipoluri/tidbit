@@ -6,7 +6,10 @@ import {Configuration, OpenAIApi} from "openai";
 
 import { Box, Button, Container, Grid, TextField, Paper, Tabs, Tab } from "@mui/material";
 import { ChromeReaderMode } from "@mui/icons-material";
-import {BsQuestionCircleFill} from 'react-icons/bs';
+import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
+import {BiMeh} from 'react-icons/bi';
+import { AwesomeButton } from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 
 function App() {
   const [prompt, setPrompt] = useState("");
@@ -14,7 +17,7 @@ function App() {
   const [response, setResponse] = useState("");
 
   const configuration = new Configuration({
-    apiKey: "",
+    apiKey: "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",
   });
 
   const openapi = new OpenAIApi(configuration);
@@ -36,7 +39,7 @@ function App() {
 
     try{
       const completion = await openapi.createCompletion({
-        model: "text-davinci-002",
+        model: "text-davinci-003",
         prompt: prompt,
         max_tokens: 100,
       });
@@ -52,11 +55,26 @@ function App() {
       <Box sx={{ width: "100%", mt: 4  }}>
         <Grid container>
         <Tabs orientation="vertical">
-          <Tab icon={<BsQuestionCircleFill/>} iconPosition="start" label="Ask A Question"/>
-          <Tab label="Generate a Picture"/>
-          <Tab label="3"/>
-          <Tab label="4"/>
-          <Tab label="5"/>
+          <AwesomeButton>
+            <AiFillQuestionCircle/>
+            Ask A Question
+          </AwesomeButton>
+          <AwesomeButton>
+            <AiFillPicture/>
+            Generate a Picture
+          </AwesomeButton>
+          <AwesomeButton>
+          <AiOutlineCheck/>
+            Check Your Grammar
+          </AwesomeButton>
+          <AwesomeButton>
+          <AiFillWechat/>
+            Talk to a Friend
+          </AwesomeButton>
+          <AwesomeButton>
+            <BiMeh/>
+            Talk to Marv
+          </AwesomeButton>
         </Tabs>
           <Grid item sx={12}>
             <TextField
@@ -78,6 +96,7 @@ function App() {
             disableElevation
             variant="contained"
             disabled={isLoading}
+            rounded
             onClick={() => handleSubmit()}
             startIcon={
               isLoading && (
