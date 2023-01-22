@@ -256,6 +256,7 @@ function IndexPopup() {
                   </AwesomeButton>
                   <Stack direction="column" justifyContent="space-around" alignItems="center">
                     <AwesomeButton
+                    moveEvents={true}
                     cssModule={styles} 
                     size="icon"
                       onPress={() => {
@@ -274,12 +275,13 @@ function IndexPopup() {
                   </Button>
                 </Stack>
                 <InputField/>
-                <Stack direction="column" justifyContent="flex-end" alignItems="center">
-                  🍩 TidBit made with love by Adi Poluri and Jayden Cang
-                </Stack>
+
               </Grid2>
             </Grid2>
           </Container>
+          <Stack direction="row" justifyContent="flex-end" alignItems="center" style={{color:"#D4D8E3",fontSize:"10px"}}>
+                  🍩 TidBit made with love by Adi Poluri and Jayden Cang
+                </Stack>
         </ThemeProvider>
       )}
     </>
