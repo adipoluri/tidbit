@@ -36,7 +36,7 @@ function InputField() {
     <>
         <TextField
             autoFocus
-            fullWidth
+            style = {{width: 300}}
             label="Put your tidbit inquiry here..."
             variant="outlined"
             multiline

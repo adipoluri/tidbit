@@ -30,7 +30,7 @@ setPersistence(auth, browserLocalPersistence)
 
 function IndexPopup() {
   
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<User>(null)
 
   // Whenever the user clicks logout, we need to 
@@ -77,94 +77,69 @@ function IndexPopup() {
       setUser(user)
     })
   }, [])
-  
-  const [prompt, setPrompt] = useState("");
-  const [response, setResponse] = useState("");
 
-  const configuration = new Configuration({
-    apiKey: process.env.OPEN_AI_KEY,
-  });
-
-  const openapi = new OpenAIApi(configuration);
-
-  useEffect(()=>{
-    try{
-      chrome.storage.local.get(null, function (data){
-        if("prompt" in data){
-          setPrompt(data.prompt);
-        }
-      });
-    }catch(e){
-      console.log("Error due to local state.");
-    }
-  }, []);
-
-  async function handleSubmit(releaseCallback) {
-
-    try{
-      console.log("yteahhhahahah")
-      const completion = await openapi.createCompletion({
-        model: "text-davinci-003",
-        prompt: prompt,
-        max_tokens: 100,
-      });
-      setResponse(completion.data.choices[0].text);
-    }catch (e){
-      alert("Error");
-    }
-    releaseCallback();
+  console.log(isLoading)
+  if(isLoading) {
+    return (
+      <>
+        <Container>
+          <Box>
+            Loading...
+          </Box>
+        </Container>
+      </>
+    )
   }
+  
   return (
     <>
-    <Container sx={{width: "45em", height: "310px"}}>
-      <Box sx={{ width: "100%", mt: 4  }}>
-        <Grid container>
-          <Grid item>
-            <AISelector/>
-          </Grid>
-          <Grid>
-            <InputField/>
-          </Grid>
-        </Grid>
-      </Box>
-    </Container>
-    <div
-    style={{
-      display: "flex",
-      flexDirection: "column",
-      padding: 16
-    }}>
-    {!user ? (
-      <button
-        onClick={() => {
-          setIsLoading(true)
-          onLoginClicked()
-        }}>
-        Log in
-      </button>
-    ) : (
-      <button
-        style={{width: "10em"}}
-        onClick={() => {
-          setIsLoading(true)
-          onLogoutClicked()
-        }}>
-        Log out
-      </button>
-    )}
-    <div>
-      {isLoading ? "Loading..." : ""}
-      {!!user ? (
-        <div>
-          Welcome to Plasmo, {user.displayName} your email address is{" "}
-          {user.email}
-        </div>
-      ) : (
-        ""
+      {!user ? (
+        <Container>
+          <Box>
+            <button
+              onClick={() => {
+                setIsLoading(true)
+                onLoginClicked()
+              }}>
+              Log in
+            </button>
+          </Box>
+        </Container>
+        ) : (
+        <Container >
+          <Box>
+            <Grid 
+              container
+              wrap="nowrap"
+              >
+              <Grid item>
+                <AISelector/>
+              </Grid>
+              <Grid item>
+                <InputField/>
+              </Grid>
+            </Grid>
+          </Box>
+          <button
+            onClick={() => {
+            setIsLoading(true)
+            onLogoutClicked()
+          }}>
+            Log out
+          </button>
+          <div>
+            {!!user ? (
+              <div>
+                Welcome to Plasmo, {user.displayName} your email address is{" "}
+                {user.email}
+              </div>
+            ) : (
+              ""
+            )}
+          </div>
+        </Container>
       )}
-    </div>
-  </div>
-  </>
+    </>
   )
 }
 
