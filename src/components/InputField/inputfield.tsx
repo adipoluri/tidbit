@@ -56,7 +56,10 @@ function InputField() {
             Submit
         </AwesomeButtonProgress>
         <Paper
+            elevation={3}
+            
             sx={{p:3}}
+            style={{marginTop:"1em",marginBottom:"1em", minHeight:"80px"}}
         >
             {response}
         </Paper>

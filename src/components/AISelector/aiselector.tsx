@@ -9,7 +9,7 @@ import 'react-awesome-button/dist/styles.css';
 function AISelector() {
   return (
     <>
-        <Tabs sx={{padding: "10px"}} orientation="vertical">
+        <Tabs orientation="vertical">
           <AwesomeButton>
             <AiFillQuestionCircle/>
           </AwesomeButton>

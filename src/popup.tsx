@@ -106,20 +106,19 @@ function IndexPopup() {
           </Box>
         </Container>
         ) : (
-        <Container >
-          <Box>
-            <Grid 
-              container
-              wrap="nowrap"
-              >
-              <Grid item>
-                <AISelector/>
-              </Grid>
-              <Grid item>
-                <InputField/>
-              </Grid>
+        <Container>
+          <Grid 
+            container
+            wrap="nowrap"
+            spacing={3}
+            >
+            <Grid item>
+              <AISelector/>
             </Grid>
-          </Box>
+            <Grid item>
+              <InputField/>
+            </Grid>
+          </Grid>
           <button
             onClick={() => {
             setIsLoading(true)
