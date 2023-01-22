@@ -8,6 +8,15 @@ import {
   signInWithCredential
 } from "firebase/auth"
 
+import AutorenewIcon from '@mui/icons-material/Autorenew';
+import {Configuration, OpenAIApi} from "openai";
+
+import { Box, Button, Container, Grid, TextField, Paper, Tabs, Tab } from "@mui/material";
+import { ChromeReaderMode } from "@mui/icons-material";
+import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
+import {BiMeh} from 'react-icons/bi';
+import { AwesomeButton } from 'react-awesome-button';
+import 'react-awesome-button/dist/styles.css';
 
 // This is the firebase.ts file we created a few
 // steps ago when we received our config!
