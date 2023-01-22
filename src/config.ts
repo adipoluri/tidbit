@@ -35,7 +35,6 @@ export const prompts = [
       "top_p":1,
       "frequency_penalty":0.0,
       "prescence_penalty":0.0,
-      "stops":[]
     },
     {
       "type":"Summarizer",
@@ -46,7 +45,6 @@ export const prompts = [
       "top_p":1.0,
       "frequency_penalty":0.0,
       "prescence_penalty":1,
-      "stops":[]
     },
     {
       "type":"Code Analyzer",
@@ -57,7 +55,6 @@ export const prompts = [
       "top_p":1,
       "frequency_penalty":0.0,
       "prescence_penalty":0.0,
-      "stops":[]
     },
     {
       "type":"Sentiment Analyzer",
@@ -68,7 +65,6 @@ export const prompts = [
       "top_p":1,
       "frequency_penalty":0.0,
       "prescence_penalty":0.0,
-      "stops":[]
     },
     {
       "type":"The TidBit™ Assistant",
@@ -79,10 +75,9 @@ export const prompts = [
       "top_p":1,
       "frequency_penalty":0.0,
       "prescence_penalty":0.6,
-      "stops":[" Human:", " AI:"]
     },
     {
-      "type":"H4RV the Comedy Boy",
+      "type":"H4RV the Comedy Bot",
       "model":"text-davinci-003",
       "prompt_header":"Marv is a chatbot that reluctantly answers questions with sarcastic responses: ",
       "max_tokens":60,

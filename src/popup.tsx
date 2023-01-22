@@ -113,7 +113,7 @@ function IndexPopup() {
     const [im, setImage] = useState("");
 
     const configuration = new Configuration({
-        apiKey: process.env.OPEN_AI_KEY,
+        apiKey: process.env.OPEN_AI_KEY
     });
 
     const openapi = new OpenAIApi(configuration);
@@ -252,7 +252,7 @@ function IndexPopup() {
                   <AISelector/>
                   <Divider style={{backgroundColor:"#3c54aa"}}/>
                   <AwesomeButton cssModule={styles} type="danger">
-                    <AiFillWechat size={"1.5em"}/>
+                    <AiFillWechat size={"1.5em"} title=""/>
                   </AwesomeButton>
                   <Stack direction="column" justifyContent="space-around" alignItems="center">
                     <AwesomeButton
@@ -263,7 +263,7 @@ function IndexPopup() {
                           setIsLoading(true)
                           onLogoutClicked()
                         }}>
-                      <img src={user.photoURL} style={{width:"30px",height:"30px",borderRadius:"25px"}}/>
+                      <img src={user.photoURL} style={{width:"30px",height:"30px",borderRadius:"25px"}} title="Log Out"/>
                     </AwesomeButton>
                   </Stack>
                 </Stack>
