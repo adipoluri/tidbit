@@ -116,13 +116,13 @@ function IndexPopup() {
   }
   return (
     <>
-    <Container sx={{width: "575px", height: "310px"}}>
+    <Container sx={{width: "45em", height: "310px"}}>
       <Box sx={{ width: "100%", mt: 4  }}>
         <Grid container>
           <Grid item>
             <AISelector/>
           </Grid>
-          <Grid item xs={6}>
+          <Grid>
             <InputField/>
           </Grid>
         </Grid>
@@ -144,6 +144,7 @@ function IndexPopup() {
       </button>
     ) : (
       <button
+        style={{width: "10em"}}
         onClick={() => {
           setIsLoading(true)
           onLogoutClicked()
