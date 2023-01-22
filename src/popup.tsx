@@ -7,36 +7,32 @@ import {
   setPersistence,
   signInWithCredential
 } from "firebase/auth"
-
-import AutorenewIcon from '@mui/icons-material/Autorenew';
-import {Configuration, OpenAIApi} from "openai";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Stack, Container, Divider, ThemeProvider, Tabs, Tab } from "@mui/material";
-import { AccountTree, ChromeReaderMode, Padding } from "@mui/icons-material";
-import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
-import {BiMeh} from 'react-icons/bi';
-import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
+import { Box, Stack, Container, Divider, ThemeProvider, Paper, Input } from "@mui/material";
 import 'react-awesome-button/dist/styles.css';
-import styles from 'react-awesome-button/src/styles/themes/theme-c137';
-
-// This is the firebase.ts file we created a few
-// steps ago when we received our config!
-import { auth } from "./firebase"
-import AISelector from "./components/AISelector/aiselector";
-import InputField from "./components/InputField/inputfield"
+import {AiFillPicture, AiOutlineFileText,AiFillWechat} from 'react-icons/ai';
+import {VscQuestion} from 'react-icons/vsc'
+import {FaHandHoldingHeart,FaRegFileCode} from "react-icons/fa"
+import {SlSpeech} from "react-icons/sl"
+import {SiRobotframework} from "react-icons/Si"
 import LoadingScreen from "./components/misc/loader";
 import LogoButton from "./components/misc/logobutton";
-import {theme} from "./config"
+import {Configuration, OpenAIApi} from "openai";
+import { TextField } from "@mui/material";
+import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
+import styles from 'react-awesome-button/src/styles/themes/theme-c137';
+import { collection, addDoc} from "firebase/firestore";
+import {db,auth} from './firebase';
+import {theme,prompts} from "./config"
 
-// We'll need to specify that we want Firebase to store
-// our credentials in localStorage rather than in-memory
 setPersistence(auth, browserLocalPersistence)
 
 function IndexPopup() {
-  
+  console.log(prompts)
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<User>(null)
-
+  const [currAi, setAI] = useState(0)
+  
   // Whenever the user clicks logout, we need to 
   // use the auth object we imported from our firebase.ts
   // file and sign them out!
@@ -69,6 +65,137 @@ function IndexPopup() {
         }
       }
     })
+  }
+
+  function AISelector() {
+  
+    return (
+      <>
+        <Stack spacing={0.4} direction="column" justifyContent="flex-start" alignItems="center">
+  
+          <AwesomeButton cssModule={styles}  onPress= {() => {setAI(0)}}>
+            <VscQuestion size={"1.5em"} color={"blue"}/>
+          </AwesomeButton>
+  
+          <AwesomeButton cssModule={styles} onPress= {() => {setAI(1)}}>
+            <AiOutlineFileText size={"1.5em"}style={{color:"green"}}/>
+          </AwesomeButton>
+  
+          <AwesomeButton cssModule={styles} onPress= {() => {setAI(2)}}>
+            <FaRegFileCode size={"1.5em"}color={"red"}/>
+          </AwesomeButton>
+  
+          <AwesomeButton cssModule={styles} onPress= {() => {setAI(3)}}>
+            <FaHandHoldingHeart size={"1.5em"}/>
+          </AwesomeButton>
+  
+          <AwesomeButton cssModule={styles} onPress= {() => {setAI(4)}}>
+            <SlSpeech size={"1.5em"}color={"yellow"}/>
+          </AwesomeButton>
+          
+          <AwesomeButton cssModule={styles} onPress= {() => {setAI(5)}}>
+            <SiRobotframework size={"1.5em"}/>
+          </AwesomeButton>
+  
+          <AwesomeButton cssModule={styles} onPress= {() => {setAI(6)}}>
+            <AiFillPicture size={"1.5em"}/>
+          </AwesomeButton>
+          
+        </Stack>
+      </>
+    )
+  }
+  
+  function InputField() {  
+    const [prompt, setPrompt] = useState("");
+    const [response, setResponse] = useState("");
+    const [im, setImage] = useState("");
+
+    const configuration = new Configuration({
+        apiKey: process.env.OPEN_AI_KEY,
+    });
+
+    const openapi = new OpenAIApi(configuration);
+
+    useEffect(()=>{
+        console.log("Store Data")
+    }, []);
+
+    async function handleSubmit(releaseCallback) {
+        setImage("")
+        try{
+            if(currAi==6) {
+                const response = await openapi.createImage({
+                  prompt: prompt,
+                  n: 1,
+                  size: "256x256",
+                });
+                setImage(response.data.data[0].url);
+                console.log("Printed Image")
+            } else {
+                const completion = await openapi.createCompletion({
+                    model: prompts[currAi]["model"],
+                    prompt: prompts[currAi]["prompt_header"]+prompt,
+                    max_tokens: prompts[currAi]["max_tokens"],
+                    temperature:prompts[currAi]["temperature"],
+                    top_p:prompts[currAi]["top_p"],
+                    frequency_penalty:prompts[currAi]["frequency_penalty"],
+                    presence_penalty:prompts[currAi]["prescence_penalty"],
+                    stop:prompts[currAi]["stops"],
+                });
+                setResponse(completion.data.choices[0].text);
+                const docRef = await addDoc(collection(db, "queries"), {
+                    use:user.uid,
+                    prompt: prompt,
+                    answer:completion.data.choices[0].text
+                });
+                console.log("Document written with ID: ", docRef.id);
+            }
+        }catch (e){
+            console.log(e)
+            alert("Error");
+        }
+        releaseCallback();
+    }
+
+    return (
+        <>
+            <TextField
+                autoFocus
+                color="secondary"
+                style = {{width: 350}}
+                label="Put your tidbit inquiry here..."
+                variant="outlined"
+                multiline
+                rows={4}
+                margin="normal"
+                inputProps={{style: {fontSize: 14,color:"#D4D8E3",fontFamily: 'Trebuchet MS'}}} // font size of input text
+                InputLabelProps={{style: {fontSize: 14, color: "#7289da",fontFamily: 'Trebuchet MS'}}} // font size of input label
+                value={prompt}
+                onChange={(e) =>{
+                    setPrompt(e.target.value)
+                }}
+            />
+            <AwesomeButtonProgress 
+                type="primary"
+                size="medium"
+                loadingLabel="Thinking..."
+                resultLabel="Got it!"
+                onPress= {(event,release) => {handleSubmit(release)}}
+                cssModule={styles}
+            >
+                Submit
+            </AwesomeButtonProgress>
+            <Paper
+                elevation={24}
+                sx={{p:3}}
+                style={{marginTop:"1em",marginBottom:"1em", minHeight:"80px",maxWidth:300, backgroundColor:"#424549", color:"#D4D8E3", fontSize:"18"}}
+            >
+                {response}
+                {im != "" ? <img src={im} style={{width:"256px",height:"256px",borderRadius:"12px"}}/>: ""}
+            </Paper>
+        </>
+    )
   }
 
   // We register this listener once when this component starts
@@ -125,6 +252,11 @@ function IndexPopup() {
                 </Stack>
               </Grid2>
               <Grid2 style={{backgroundColor:"#36393e"}}>
+                <Paper
+                  elevation={24}
+                  style={{marginTop:"1em",marginBottom:"1em", minHeight:"80px",maxWidth:300, backgroundColor:"#424549", color:"#D4D8E3", fontSize:"18"}}>
+                    {prompts[currAi]["type"]}
+                </Paper>
                 <InputField/>
               </Grid2>
             </Grid2>
