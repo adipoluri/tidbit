@@ -75,31 +75,31 @@ function IndexPopup() {
         <Stack spacing={0.4} direction="column" justifyContent="flex-start" alignItems="center">
   
           <AwesomeButton cssModule={styles}  onPress= {() => {setAI(0)}}>
-            <VscQuestion size={"1.5em"} title="Brainiac Mode"/>
+            <VscQuestion size={"1.5em"} color={"blue"}/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(1)}}>
-            <AiOutlineFileText size={"1.5em"} title="Summarizer"/>
+            <AiOutlineFileText size={"1.5em"}style={{color:"green"}}/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(2)}}>
-            <FaRegFileCode size={"1.5em"} title="Code Analyzer"/>
+            <FaRegFileCode size={"1.5em"}color={"red"}/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(3)}}>
-            <FaHandHoldingHeart size={"1.5em"} title="Sentiment Analyzer"/>
+            <FaHandHoldingHeart size={"1.5em"}/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(4)}}>
-            <SlSpeech size={"1.5em"} title="The TidBit Assistant"/>
+            <SlSpeech size={"1.5em"}color={"yellow"}/>
           </AwesomeButton>
           
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(5)}}>
-            <SiRobotframework size={"1.5em"} title="H4RV The Comedy Bot"/>
+            <SiRobotframework size={"1.5em"}/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(6)}}>
-            <AiFillPicture size={"1.5em"} title="Imagifier"/>
+            <AiFillPicture size={"1.5em"}/>
           </AwesomeButton>
           
         </Stack>
@@ -196,7 +196,7 @@ function IndexPopup() {
                 onPress= {(event,release) => {handleSubmit(release)}}
                 cssModule={styles}
             >
-                <FiHeart title="Like"/>
+                <FiHeart/>
             </AwesomeButtonProgress>
             </Stack>
             <Paper
@@ -270,7 +270,7 @@ function IndexPopup() {
               </Grid2>
               <Grid2 style={{backgroundColor:"#36393e"}}>
                 <Stack   direction="row" justifyContent="center" alignItems="center">
-                  <Button variant="outlined" color="text" disableRipple={true}>
+                  <Button variant="contained" color="primary" disableRipple={true}>
                     {prompts[currAi]["type"]}
                   </Button>
                 </Stack>
