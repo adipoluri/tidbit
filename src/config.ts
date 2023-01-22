@@ -1,13 +1,6 @@
-const discBlue = "#7289da";
-const discGrey = "#424549";
-const discDarkGrey = "282b30";
-const discDarkestGrey = "282b30";
-const discBlack = "#1e2124"
 
-// global font
-
-export const blue = discBlue;
-export const grey = discGrey;
-export const darkGrey = discDarkGrey;
-export const darkestGrey = discDarkestGrey;
-export const black = discBlack;
+export const blue = "#7289da";
+export const grey = "#424549";
+export const darkGrey = "282b30";
+export const darkestGrey = "282b30";
+export const black = "#1e2124"
