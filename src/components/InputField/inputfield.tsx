@@ -36,6 +36,7 @@ function InputField() {
     <>
         <TextField
             autoFocus
+            color="secondary"
             style = {{width: 300}}
             label="Put your tidbit inquiry here..."
             variant="outlined"
