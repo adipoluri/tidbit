@@ -8,13 +8,14 @@ import {
   signInWithCredential
 } from "firebase/auth"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Stack, Container, Divider, ThemeProvider, Paper, Input } from "@mui/material";
+import { Box, Stack, Container, Divider, ThemeProvider, Paper, Button } from "@mui/material";
 import 'react-awesome-button/dist/styles.css';
 import {AiFillPicture, AiOutlineFileText,AiFillWechat} from 'react-icons/ai';
 import {VscQuestion} from 'react-icons/vsc'
 import {FaHandHoldingHeart,FaRegFileCode} from "react-icons/fa"
 import {SlSpeech} from "react-icons/sl"
 import {SiRobotframework} from "react-icons/Si"
+import {FiHeart} from "react-icons/fi"
 import LoadingScreen from "./components/misc/loader";
 import LogoButton from "./components/misc/logobutton";
 import {Configuration, OpenAIApi} from "openai";
@@ -176,16 +177,28 @@ function IndexPopup() {
                     setPrompt(e.target.value)
                 }}
             />
-            <AwesomeButtonProgress 
+            <Stack direction={"row"} justifyContent={"space-between"}>
+              <AwesomeButtonProgress 
+                  type="primary"
+                  size="medium"
+                  loadingLabel="Thinking..."
+                  resultLabel="Got it!"
+                  onPress= {(event,release) => {handleSubmit(release)}}
+                  cssModule={styles}
+              >
+                  Submit
+              </AwesomeButtonProgress>
+              <AwesomeButtonProgress 
                 type="primary"
-                size="medium"
-                loadingLabel="Thinking..."
-                resultLabel="Got it!"
+                size="small"
+                loadingLabel="Liking..."
+                resultLabel="Liked!"
                 onPress= {(event,release) => {handleSubmit(release)}}
                 cssModule={styles}
             >
-                Submit
+                <FiHeart/>
             </AwesomeButtonProgress>
+            </Stack>
             <Paper
                 elevation={24}
                 sx={{p:3}}
@@ -233,7 +246,7 @@ function IndexPopup() {
         <ThemeProvider theme={theme}>
           <Container style={{backgroundColor:"#36393e"}}>
             <Grid2 container wrap="nowrap" spacing={6}>
-              <Grid2 style={{backgroundColor:"#282b30",}}>
+              <Grid2 style={{backgroundColor:"#282b30"}}>
                 <Stack spacing={1}>
                   <LogoButton/>
                   <AISelector/>
@@ -241,23 +254,29 @@ function IndexPopup() {
                   <AwesomeButton cssModule={styles} type="danger">
                     <AiFillWechat size={"1.5em"}/>
                   </AwesomeButton>
-                  <AwesomeButton 
-                  cssModule={styles} 
-                    onPress={() => {
-                        setIsLoading(true)
-                        onLogoutClicked()
-                      }}>
-                    <img src={user.photoURL} style={{width:"30px",height:"30px",borderRadius:"25px"}}/>
-                  </AwesomeButton>
+                  <Stack direction="column" justifyContent="space-around" alignItems="center">
+                    <AwesomeButton
+                    cssModule={styles} 
+                    size="icon"
+                      onPress={() => {
+                          setIsLoading(true)
+                          onLogoutClicked()
+                        }}>
+                      <img src={user.photoURL} style={{width:"30px",height:"30px",borderRadius:"25px"}}/>
+                    </AwesomeButton>
+                  </Stack>
                 </Stack>
               </Grid2>
               <Grid2 style={{backgroundColor:"#36393e"}}>
-                <Paper
-                  elevation={24}
-                  style={{marginTop:"1em",marginBottom:"1em", minHeight:"80px",maxWidth:300, backgroundColor:"#424549", color:"#D4D8E3", fontSize:"18"}}>
+                <Stack   direction="row" justifyContent="center" alignItems="center">
+                  <Button variant="outlined" color="text" disableRipple={true}>
                     {prompts[currAi]["type"]}
-                </Paper>
+                  </Button>
+                </Stack>
                 <InputField/>
+                <Stack direction="column" justifyContent="flex-end" alignItems="center">
+                  🍩 TidBit made with love by Adi Poluri and Jayden Cang
+                </Stack>
               </Grid2>
             </Grid2>
           </Container>

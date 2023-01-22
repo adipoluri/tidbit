@@ -93,7 +93,7 @@ export const prompts = [
     }
     ,
     {
-      "type":"Image Bot",
+      "type":"Imagifier",
       "model":"text-davinci-003",
       "prompt_header":"Marv is a chatbot that reluctantly answers questions with sarcastic responses: ",
       "max_tokens":60,
