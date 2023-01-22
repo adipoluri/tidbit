@@ -21,6 +21,8 @@ import 'react-awesome-button/dist/styles.css';
 // This is the firebase.ts file we created a few
 // steps ago when we received our config!
 import { auth } from "./firebase"
+import AISelector from "./components/AISelector/aiselector";
+import InputField from "./components/InputField/inputfield"
 
 // We'll need to specify that we want Firebase to store
 // our credentials in localStorage rather than in-memory
@@ -117,59 +119,11 @@ function IndexPopup() {
     <Container sx={{width: "575px", height: "310px"}}>
       <Box sx={{ width: "100%", mt: 4  }}>
         <Grid container>
-          <Grid item xs={6}>
-            <Tabs sx={{padding: "10px"}} orientation="vertical">
-              <AwesomeButton>
-                <AiFillQuestionCircle/>
-                Ask A Question
-              </AwesomeButton>
-              <AwesomeButton>
-                <AiFillPicture/>
-                Generate a Picture
-              </AwesomeButton>
-              <AwesomeButton>
-              <AiOutlineCheck/>
-                Check Your Grammar
-              </AwesomeButton>
-              <AwesomeButton>
-              <AiFillWechat/>
-                Talk to a Friend
-              </AwesomeButton>
-              <AwesomeButton>
-                <BiMeh/>
-                Talk to Marv
-              </AwesomeButton>
-              <AwesomeButton>
-                <BiMeh/>
-                Talk to Marv
-              </AwesomeButton>
-            </Tabs>
+          <Grid item>
+            <AISelector/>
           </Grid>
           <Grid item xs={6}>
-            <TextField
-            autoFocus
-            fullWidth
-            label="Ligma"
-            variant="outlined"
-            multiline
-            rows={4}
-            margin="normal"
-            value={prompt}
-            onChange={(e) =>{
-              setPrompt(e.target.value)
-              //chrome.storage.local.set({prompt: e.target.value});
-            }}
-            />
-
-            <AwesomeButtonProgress
-            //style={}
-            type="primary"
-            size="medium"
-            onPress= {(event,release) => {handleSubmit(release)}}
-            >
-              Submit
-            </AwesomeButtonProgress>
-            <Paper sx={{p:3}}>{response}</Paper>
+            <InputField/>
           </Grid>
         </Grid>
       </Box>
@@ -180,9 +134,6 @@ function IndexPopup() {
       flexDirection: "column",
       padding: 16
     }}>
-    <h1>
-      Welcome to your <a href="https://www.plasmo.com">Plasmo</a> Extension!
-    </h1>
     {!user ? (
       <button
         onClick={() => {
