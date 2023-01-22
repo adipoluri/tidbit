@@ -9,7 +9,7 @@ function LogoButton() {
     <> 
         <Stack direction="column" justifyContent="space-around" alignItems="center">
           <AwesomeButton cssModule={styles} size="icon">
-              <img src={donutLogo} style={{width:"30px",height:"30px"}}/>
+              <img src={donutLogo} style={{width:"30px",height:"30px"}} title={"TidBit! 🍩"}/>
           </AwesomeButton>
         </Stack>
         <Divider style={{backgroundColor:"#3c54aa"}}/>
