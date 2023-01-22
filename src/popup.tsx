@@ -21,14 +21,13 @@ import 'react-awesome-button/dist/styles.css';
 // This is the firebase.ts file we created a few
 // steps ago when we received our config!
 import { auth } from "./firebase"
-import { env } from "process";
 
 // We'll need to specify that we want Firebase to store
 // our credentials in localStorage rather than in-memory
 setPersistence(auth, browserLocalPersistence)
 
 function IndexPopup() {
-  /*
+  
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState<User>(null)
 
@@ -76,7 +75,7 @@ function IndexPopup() {
       setUser(user)
     })
   }, [])
-  */
+  
   const [prompt, setPrompt] = useState("");
   const [response, setResponse] = useState("");
 
@@ -114,32 +113,39 @@ function IndexPopup() {
     releaseCallback();
   }
   return (
+    <>
     <Container sx={{width: "575px", height: "310px"}}>
       <Box sx={{ width: "100%", mt: 4  }}>
         <Grid container>
-        <Tabs sx={{padding: "10px"}} orientation="vertical">
-          <AwesomeButton>
-            <AiFillQuestionCircle/>
-             Ask A Question
-          </AwesomeButton>
-          <AwesomeButton>
-            <AiFillPicture/>
-            Generate a Picture
-          </AwesomeButton>
-          <AwesomeButton>
-          <AiOutlineCheck/>
-            Check Your Grammar
-          </AwesomeButton>
-          <AwesomeButton>
-          <AiFillWechat/>
-            Talk to a Friend
-          </AwesomeButton>
-          <AwesomeButton>
-            <BiMeh/>
-            Talk to Marv
-          </AwesomeButton>
-        </Tabs>
-          <Grid item>
+          <Grid item xs={6}>
+            <Tabs sx={{padding: "10px"}} orientation="vertical">
+              <AwesomeButton>
+                <AiFillQuestionCircle/>
+                Ask A Question
+              </AwesomeButton>
+              <AwesomeButton>
+                <AiFillPicture/>
+                Generate a Picture
+              </AwesomeButton>
+              <AwesomeButton>
+              <AiOutlineCheck/>
+                Check Your Grammar
+              </AwesomeButton>
+              <AwesomeButton>
+              <AiFillWechat/>
+                Talk to a Friend
+              </AwesomeButton>
+              <AwesomeButton>
+                <BiMeh/>
+                Talk to Marv
+              </AwesomeButton>
+              <AwesomeButton>
+                <BiMeh/>
+                Talk to Marv
+              </AwesomeButton>
+            </Tabs>
+          </Grid>
+          <Grid item xs={6}>
             <TextField
             autoFocus
             fullWidth
@@ -163,55 +169,55 @@ function IndexPopup() {
             >
               Submit
             </AwesomeButtonProgress>
+            <Paper sx={{p:3}}>{response}</Paper>
           </Grid>
-          <Grid item xs={12} sx={{mt:3}}>
-              <Paper sx={{p:3}}>{response}</Paper>
-            </Grid>
         </Grid>
       </Box>
     </Container>
+    <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      padding: 16
+    }}>
+    <h1>
+      Welcome to your <a href="https://www.plasmo.com">Plasmo</a> Extension!
+    </h1>
+    {!user ? (
+      <button
+        onClick={() => {
+          setIsLoading(true)
+          onLoginClicked()
+        }}>
+        Log in
+      </button>
+    ) : (
+      <button
+        onClick={() => {
+          setIsLoading(true)
+          onLogoutClicked()
+        }}>
+        Log out
+      </button>
+    )}
+    <div>
+      {isLoading ? "Loading..." : ""}
+      {!!user ? (
+        <div>
+          Welcome to Plasmo, {user.displayName} your email address is{" "}
+          {user.email}
+        </div>
+      ) : (
+        ""
+      )}
+    </div>
+  </div>
+  </>
   )
 }
 
 export default IndexPopup
 
 /*
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        padding: 16
-      }}>
-      <h1>
-        Welcome to your <a href="https://www.plasmo.com">Plasmo</a> Extension!
-      </h1>
-      {!user ? (
-        <button
-          onClick={() => {
-            setIsLoading(true)
-            onLoginClicked()
-          }}>
-          Log in
-        </button>
-      ) : (
-        <button
-          onClick={() => {
-            setIsLoading(true)
-            onLogoutClicked()
-          }}>
-          Log out
-        </button>
-      )}
-      <div>
-        {isLoading ? "Loading..." : ""}
-        {!!user ? (
-          <div>
-            Welcome to Plasmo, {user.displayName} your email address is{" "}
-            {user.email}
-          </div>
-        ) : (
-          ""
-        )}
-      </div>
-    </div>
+    
 */
