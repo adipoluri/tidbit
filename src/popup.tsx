@@ -15,17 +15,20 @@ import { Box, Button, Container, Grid, TextField, Paper, Tabs, Tab } from "@mui/
 import { ChromeReaderMode } from "@mui/icons-material";
 import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
 import {BiMeh} from 'react-icons/bi';
-import { AwesomeButton } from 'react-awesome-button';
+import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
 import 'react-awesome-button/dist/styles.css';
 
 // This is the firebase.ts file we created a few
 // steps ago when we received our config!
 import { auth } from "./firebase"
+import { env } from "process";
 
 // We'll need to specify that we want Firebase to store
 // our credentials in localStorage rather than in-memory
 setPersistence(auth, browserLocalPersistence)
+
 function IndexPopup() {
+  /*
   const [isLoading, setIsLoading] = useState(false)
   const [user, setUser] = useState<User>(null)
 
@@ -73,8 +76,105 @@ function IndexPopup() {
       setUser(user)
     })
   }, [])
+  */
+  const [prompt, setPrompt] = useState("");
+  const [response, setResponse] = useState("");
 
+  const configuration = new Configuration({
+    apiKey: process.env.OPEN_AI_KEY,
+  });
+
+  const openapi = new OpenAIApi(configuration);
+
+  useEffect(()=>{
+    try{
+      chrome.storage.local.get(null, function (data){
+        if("prompt" in data){
+          setPrompt(data.prompt);
+        }
+      });
+    }catch(e){
+      console.log("Error due to local state.");
+    }
+  }, []);
+
+  async function handleSubmit(releaseCallback) {
+
+    try{
+      console.log("yteahhhahahah")
+      const completion = await openapi.createCompletion({
+        model: "text-davinci-003",
+        prompt: prompt,
+        max_tokens: 100,
+      });
+      setResponse(completion.data.choices[0].text);
+    }catch (e){
+      alert("Error", e);
+    }
+    releaseCallback();
+  }
   return (
+    <Container>
+      <Box sx={{ width: "100%", mt: 4  }}>
+        <Grid container>
+        <Tabs orientation="vertical">
+          <AwesomeButton>
+            <AiFillQuestionCircle/>
+            Ask A Question
+          </AwesomeButton>
+          <AwesomeButton>
+            <AiFillPicture/>
+            Generate a Picture
+          </AwesomeButton>
+          <AwesomeButton>
+          <AiOutlineCheck/>
+            Check Your Grammar
+          </AwesomeButton>
+          <AwesomeButton>
+          <AiFillWechat/>
+            Talk to a Friend
+          </AwesomeButton>
+          <AwesomeButton>
+            <BiMeh/>
+            Talk to Marv
+          </AwesomeButton>
+        </Tabs>
+          <Grid item>
+            <TextField
+            autoFocus
+            fullWidth
+            label="Ligma"
+            variant="outlined"
+            multiline
+            rows={4}
+            margin="normal"
+            value={prompt}
+            onChange={(e) =>{
+              setPrompt(e.target.value)
+              //chrome.storage.local.set({prompt: e.target.value});
+            }}
+            />
+
+            <AwesomeButtonProgress
+            type="primary"
+            size="medium"
+            onPress= {(event,release) => {handleSubmit(release)}}
+            >
+              Submit
+            </AwesomeButtonProgress>
+          </Grid>
+          <Grid item xs={12} sx={{mt:3}}>
+              <Paper sx={{p:3}}>{response}</Paper>
+            </Grid>
+        </Grid>
+      </Box>
+    </Container>
+  )
+}
+
+export default IndexPopup
+
+/*
     <div
       style={{
         display: "flex",
@@ -113,8 +213,4 @@ function IndexPopup() {
         )}
       </div>
     </div>
-  )
-}
-
-export default IndexPopup
-
+*/
