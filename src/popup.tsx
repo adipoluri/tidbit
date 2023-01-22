@@ -12,7 +12,7 @@ import AutorenewIcon from '@mui/icons-material/Autorenew';
 import {Configuration, OpenAIApi} from "openai";
 
 import { Box, Button, Container, Grid, TextField, Paper, Tabs, Tab } from "@mui/material";
-import { ChromeReaderMode } from "@mui/icons-material";
+import { ChromeReaderMode, Padding } from "@mui/icons-material";
 import {AiFillQuestionCircle, AiFillPicture, AiOutlineCheck, AiFillWechat} from 'react-icons/ai';
 import {BiMeh} from 'react-icons/bi';
 import { AwesomeButton, AwesomeButtonProgress } from 'react-awesome-button';
@@ -109,18 +109,18 @@ function IndexPopup() {
       });
       setResponse(completion.data.choices[0].text);
     }catch (e){
-      alert("Error", e);
+      alert("Error");
     }
     releaseCallback();
   }
   return (
-    <Container>
+    <Container sx={{width: "575px", height: "310px"}}>
       <Box sx={{ width: "100%", mt: 4  }}>
         <Grid container>
-        <Tabs orientation="vertical">
+        <Tabs sx={{padding: "10px"}} orientation="vertical">
           <AwesomeButton>
             <AiFillQuestionCircle/>
-            Ask A Question
+             Ask A Question
           </AwesomeButton>
           <AwesomeButton>
             <AiFillPicture/>
@@ -156,6 +156,7 @@ function IndexPopup() {
             />
 
             <AwesomeButtonProgress
+            //style={}
             type="primary"
             size="medium"
             onPress= {(event,release) => {handleSubmit(release)}}
