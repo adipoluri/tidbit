@@ -22,7 +22,14 @@ TidBit is the browser extension that makes finding answers and completing tasks 
 	<code><img height="100" src="https://user-images.githubusercontent.com/25181517/183897015-94a058a6-b86e-4e42-a37f-bf92061753e5.png" alt="React" title="React" /></code>
 	<code><img height="100" src="https://user-images.githubusercontent.com/25181517/183890598-19a0ac2d-e88a-4005-a8df-1ee36782fde1.png" alt="TypeScript" title="TypeScript" /></code>
 </div>
+& Plasmo.js
 
 ## 👨‍🚀 Future Plans
-
+- Create Back-end OpenAI API Wrapper/Handling server
+- Add User Accounts
+- Add the ability to add Contacts
+- Add the ability to send queries to Contacts
+- Tweak Queries for the API
+- Fix Bugs!!!!!!
+- Release browser extension?????
 
