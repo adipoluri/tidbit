@@ -146,7 +146,7 @@ function IndexPopup() {
                 });
                 setResponse(completion.data.choices[0].text);
                 const docRef = await addDoc(collection(db, "queries"), {
-                    use:user.uid,
+                    user:user.uid,
                     prompt: prompt,
                     answer:completion.data.choices[0].text
                 });
