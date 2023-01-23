@@ -86,31 +86,31 @@ function IndexPopup() {
         <Stack spacing={0.4} direction="column" justifyContent="flex-start" alignItems="center">
   
           <AwesomeButton cssModule={styles}  onPress= {() => {setAI(0)}}>
-            <GiBrain size={"1.5em"} color={"blue"}/>
+            <GiBrain size={"1.5em"} title="Brainiac Mode"/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(1)}}>
-            <AiOutlineFileText size={"1.5em"}style={{color:"green"}}/>
+            <AiOutlineFileText size={"1.5em"} title="Summarizer"/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(2)}}>
-            <FaRegFileCode size={"1.5em"}color={"red"}/>
+            <FaRegFileCode size={"1.5em"} title="Code Analyzer"/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(3)}}>
-            <FaHandHoldingHeart size={"1.5em"}/>
+            <FaHandHoldingHeart size={"1.5em"} title="Sentiment Analyzer"/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(4)}}>
-            <SlSpeech size={"1.5em"}color={"yellow"}/>
+            <SlSpeech size={"1.5em"} title="The TidBit Assistant"/>
           </AwesomeButton>
           
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(5)}}>
-            <SiRobotframework size={"1.5em"}/>
+            <SiRobotframework size={"1.5em"} title="H4RV The Comedy Bot"/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(6)}}>
-            <AiFillPicture size={"1.5em"}/>
+            <AiFillPicture size={"1.5em"} title="Imagifier"/>
           </AwesomeButton>
           
         </Stack>
@@ -122,6 +122,7 @@ function IndexPopup() {
     const [prompt, setPrompt] = useState("");
     const [response, setResponse] = useState("");
     const [im, setImage] = useState("");
+    const [currDoc, setCurrDoc] = useState("");
 
     const configuration = new Configuration({
         apiKey: process.env.OPEN_AI_KEY
@@ -153,8 +154,8 @@ function IndexPopup() {
                     top_p:prompts[currAi]["top_p"],
                     frequency_penalty:prompts[currAi]["frequency_penalty"],
                     presence_penalty:prompts[currAi]["prescence_penalty"],
-                    stop:prompts[currAi]["stops"],
                 });
+                console.log(completion.data.choices)
                 setResponse(completion.data.choices[0].text);
                 const docRef = await addDoc(collection(db, "queries"), {
                     user:user.uid,
@@ -162,6 +163,7 @@ function IndexPopup() {
                     answer:completion.data.choices[0].text
                 });
                 console.log("Document written with ID: ", docRef.id);
+                setCurrDoc(docRef.path)
             }
         }catch (e){
             console.log(e)
@@ -204,9 +206,9 @@ function IndexPopup() {
                 size="small"
                 loadingLabel="Liking..."
                 resultLabel="Liked!"
-                onPress= {(event,release) => {handleSubmit(release)}}
+                onPress= {() => {}}
                 cssModule={styles}
-            >
+              >
                 <FiHeart/>
             </AwesomeButtonProgress>
             </Stack>
@@ -281,7 +283,7 @@ function IndexPopup() {
                   <AISelector/>
                   <Divider style={{backgroundColor:"#3c54aa"}}/>
                   <AwesomeButton cssModule={styles} type="danger">
-                    <AiFillWechat size={"1.5em"} title=""/>
+                    <AiFillWechat size={"1.5em"} title="Recents & Favourites"/>
                   </AwesomeButton>
                   <Stack direction="column" justifyContent="space-around" alignItems="center">
                     <AwesomeButton
