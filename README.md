@@ -1,4 +1,4 @@
-![Confetti](https://github.com/adipoluri/tidbit/social/banner.png)
+(https://github.com/adipoluri/tidbit/social/banner.png)
 
 <p align="center">
   <em>🍩 Chat-GPT at the edge of your Browser 🍩</em></br>
