@@ -1,4 +1,4 @@
-(https://github.com/adipoluri/tidbit/social/banner.png)
+![TidBit](https://github.com/adipoluri/tidbit/social/banner.png)
 
 <p align="center">
   <em>🍩 Chat-GPT at the edge of your Browser 🍩</em></br>
@@ -18,6 +18,6 @@ TidBit is the browser extension that makes finding answers and completing tasks 
 
 https://user-images.githubusercontent.com/25181517/189716855-2c69ca7a-5149-4647-936d-780610911353.png
 
-## 👨‍🚀 To Run this Project Locally
+## 👨‍🚀 Future Plans
 
 
