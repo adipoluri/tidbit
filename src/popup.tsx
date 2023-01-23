@@ -8,10 +8,10 @@ import {
   signInWithCredential
 } from "firebase/auth"
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
-import { Box, Stack, Container, Divider, ThemeProvider, Paper, Button } from "@mui/material";
+import { Box, Stack, Container, Divider, ThemeProvider, Paper, Backdrop } from "@mui/material";
 import 'react-awesome-button/dist/styles.css';
 import {AiFillPicture, AiOutlineFileText,AiFillWechat} from 'react-icons/ai';
-import {VscQuestion} from 'react-icons/vsc'
+import {GiBrain} from 'react-icons/gi'
 import {FaHandHoldingHeart,FaRegFileCode} from "react-icons/fa"
 import {SlSpeech} from "react-icons/sl"
 import {SiRobotframework} from "react-icons/Si"
@@ -25,6 +25,8 @@ import styles from 'react-awesome-button/src/styles/themes/theme-c137';
 import { collection, addDoc} from "firebase/firestore";
 import {db,auth} from './firebase';
 import {theme,prompts} from "./config"
+import CircularProgress from '@mui/material/CircularProgress';
+import TypeIt from "typeit-react";
 
 setPersistence(auth, browserLocalPersistence)
 
@@ -33,7 +35,16 @@ function IndexPopup() {
   const [isLoading, setIsLoading] = useState(true)
   const [user, setUser] = useState<User>(null)
   const [currAi, setAI] = useState(0)
-  
+  const [open, setOpen] = useState(true);
+
+  //Backdrop
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const show = async () => {
+    setOpen(true);
+  };
+
   // Whenever the user clicks logout, we need to 
   // use the auth object we imported from our firebase.ts
   // file and sign them out!
@@ -75,7 +86,7 @@ function IndexPopup() {
         <Stack spacing={0.4} direction="column" justifyContent="flex-start" alignItems="center">
   
           <AwesomeButton cssModule={styles}  onPress= {() => {setAI(0)}}>
-            <VscQuestion size={"1.5em"} color={"blue"}/>
+            <GiBrain size={"1.5em"} color={"blue"}/>
           </AwesomeButton>
   
           <AwesomeButton cssModule={styles} onPress= {() => {setAI(1)}}>
@@ -228,6 +239,7 @@ function IndexPopup() {
     )
   }
   
+
   return (
     <>
       {!user ? (
@@ -245,6 +257,23 @@ function IndexPopup() {
         ) : (
         <ThemeProvider theme={theme}>
           <Container style={{backgroundColor:"#36393e"}}>
+            <Stack direction="column" justifyContent="space-around" alignItems="center">
+              <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={open}
+                onClick={handleClose}
+                >
+                <TypeIt options={{
+                              speed: 45,
+                              waitUntilVisible: true,
+                              lifelike: true,
+                              nextStringDelay: 1750
+                        }}>
+                  Welcome <i>{user.displayName}</i>!
+                  This is <strong>TidBit</strong>!
+                </TypeIt>
+              </Backdrop>
+            </Stack>
             <Grid2 container wrap="nowrap" spacing={6}>
               <Grid2 style={{backgroundColor:"#282b30"}}>
                 <Stack spacing={1}>
@@ -269,19 +298,18 @@ function IndexPopup() {
                 </Stack>
               </Grid2>
               <Grid2 style={{backgroundColor:"#36393e"}}>
-                <Stack   direction="row" justifyContent="center" alignItems="center">
-                  <Button variant="contained" color="primary" disableRipple={true}>
+                <Stack  direction="row" justifyContent="center" alignItems="center">
+                  <AwesomeButton cssModule={styles}>
                     {prompts[currAi]["type"]}
-                  </Button>
+                  </AwesomeButton>
                 </Stack>
                 <InputField/>
-
               </Grid2>
             </Grid2>
-          </Container>
-          <Stack direction="row" justifyContent="flex-end" alignItems="center" style={{color:"#D4D8E3",fontSize:"10px"}}>
-                  🍩 TidBit made with love by Adi Poluri and Jayden Cang
-                </Stack>
+              <Stack direction="row" justifyContent="flex-end" alignItems="center" style={{color:"#D4D8E3",fontSize:"10px",opacity:"0.3"}}>
+                {"🍩 TidBit © 2023 ~ made with love by Adi Poluri and Jayden Cang"}
+              </Stack>
+          </Container>   
         </ThemeProvider>
       )}
     </>
