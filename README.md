@@ -1,4 +1,4 @@
-![Confetti](https://github.com/awtkns/reworkd/blob/main/public/social.png)
+![Confetti](https://github.com/adipoluri/tidbit/New Project.png)
 
 <p align="center">
   <em>🤖 Making your life easier 🤖</em></br>
