@@ -20,7 +20,8 @@
     "react-awesome-button": "^7.0.5",
     "react-dom": "18.2.0",
     "react-icons": "^4.7.1",
-    "typeit": "^8.7.1"
+    "typeit": "^8.7.1",
+    "typeit-react": "^2.6.4"
   },
   "devDependencies": {
     "@plasmohq/prettier-plugin-sort-imports": "3.6.0",
