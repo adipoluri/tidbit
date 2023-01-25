@@ -29,9 +29,9 @@ export const prompts = [
     {
       "type":"Brainiac Mode",
       "model":"text-davinci-003",
-      "prompt_header":"I am a highly intelligent question answering bot. If you ask me a question that is rooted in truth, I will give you the answer. If you ask me a question that is nonsense, trickery, or has no clear answer, I will respond with \"Unknown\"",
+      "prompt_header":"",
       "max_tokens":100,
-      "temperature":0,
+      "temperature":0.2,
       "top_p":1,
       "frequency_penalty":0.0,
       "prescence_penalty":0.0,
