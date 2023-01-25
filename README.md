@@ -1,4 +1,4 @@
-![TidBit](https://github.com/adipoluri/tidbit/blob/main/social/banner.png)
+![TidBit](https://youtu.be/lmSSxosUau4)
 
 <p align="center">
   <em>🍩 Chat-GPT at the edge of your Browser 🍩</em></br>
